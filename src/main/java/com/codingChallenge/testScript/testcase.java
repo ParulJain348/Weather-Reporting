@@ -57,6 +57,7 @@ Reporter.log("Error in code "+e);
             Double tempInAPI= Double.valueOf(General.getAPIData(General.getPropertiesValue("city"),General.getPropertiesValue("appID"),"main","temp"));
             tempInAPI=General.convertKelvinIntoCelsius(tempInAPI);
             General.compareTempInCelsius(tempInAPI,tempInUI);
+            driver.quit();
         }
         catch(Exception e)
         {
