@@ -2,12 +2,10 @@ package com.codingChallenge.testScript;
 
 import com.codingChallenge.Driver;
 import com.codingChallenge.apphelper.General;
-import jdk.nashorn.internal.ir.CatchNode;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 public class testcase extends Driver {
     WebDriver driver;
@@ -35,13 +33,13 @@ public class testcase extends Driver {
     public void Phase2(){
         try{
            String  wind_Speed = General.getAPIData(General.getPropertiesValue("city"),General.getPropertiesValue("appID"),"wind","speed");
-           System.out.println(wind_Speed);
+          Reporter.log(wind_Speed);
            String temp=General.getAPIData(General.getPropertiesValue("city"),General.getPropertiesValue("appID"),"main","temp");
-            System.out.println(temp);
+            Reporter.log(temp);
         }
         catch (Exception e)
         {
-System.out.println("Error in code "+e);
+Reporter.log("Error in code "+e);
             Assert.fail("Phase1",e);
         }
     }
@@ -58,18 +56,11 @@ System.out.println("Error in code "+e);
             Double tempInUI= Double.valueOf(new General().getTempInCelesicuc(driver));
             Double tempInAPI= Double.valueOf(General.getAPIData(General.getPropertiesValue("city"),General.getPropertiesValue("appID"),"main","temp"));
             tempInAPI=General.convertKelvinIntoCelsius(tempInAPI);
-            if((tempInAPI-tempInUI)<1 & (tempInAPI-tempInUI)>-1)
-            { System.out.println(General.getPropertiesValue("city")+" Current temp is :"+tempInUI+"Which is similar to api temp : "+tempInAPI);
-            }
-            else
-            {System.out.println(General.getPropertiesValue("city")+" Current temp is :"+tempInUI+"Which is not similar to api temp : "+tempInAPI);
-
-            }
-
+            General.compareTempInCelsius(tempInAPI,tempInUI);
         }
         catch(Exception e)
         {
-            System.out.println("Error in code "+e);
+            Reporter.log("Error in code "+e);
             Assert.fail("Phase1",e);
         }
     }

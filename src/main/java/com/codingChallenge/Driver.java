@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.testng.Reporter;
 
 public class Driver {
 
@@ -17,20 +18,23 @@ public static WebDriver LaunchBrowser(String browser){
         {
             System.setProperty("webdriver.chrome.driver","./chromedriver.exe");
             driver=new ChromeDriver();
+            Reporter.log("Launch chrome browser");
         }
         else if(browser.toLowerCase().contains("firefox"))
         {
             System.setProperty("webdriver.gecko.driver","./geckodriver.exe");
             driver=new FirefoxDriver();
+            Reporter.log("Launch firefox browser");
         }
         else if(browser.toLowerCase().contains("ie"))
         {
             System.setProperty("webdriver.ie.driver","./IEDriverServer.exe");
             driver=new InternetExplorerDriver();
+            Reporter.log("Launch ie browser");
         }
         else
         {
-            System.out.println("browser Not found");
+            Reporter.log("browser Not found");
         }
         driver.manage().window().maximize();
     }
@@ -41,12 +45,13 @@ public static WebDriver LaunchBrowser(String browser){
             ChromeOptions options = new ChromeOptions();
             options.addArguments("headless");
             driver = new ChromeDriver(options);
+            Reporter.log("Launch linux chrome browser");
         }
         driver.manage().window().maximize();
     }
     else
     {
-        System.out.println("OS not found");
+       Reporter.log("OS not found");
     }
     return driver;
 }
